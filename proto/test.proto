@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package test;
+
+service TestService {
+    rpc echoHello (EchoHelloRequest) returns (EchoHelloResponse) {}
+    rpc echoBye (EchoByeRequest) returns (EchoByeResponse) {}
+}
+
+message EchoHelloRequest {
+    int32 req = 1;
+}
+
+message EchoHelloResponse {
+    int32 res = 1;
+}
+
+message EchoByeRequest {
+    int32 req = 1;
+}
+
+message EchoByeResponse {
+    int32 res = 1;
+}
