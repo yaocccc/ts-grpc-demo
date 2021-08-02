@@ -1,4 +1,4 @@
-// Original file: proto/test.proto
+// Original file: protos/test.proto
 
 
 export interface EchoHelloRequest {

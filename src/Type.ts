@@ -1,19 +1,19 @@
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
 
-import { TestServiceHandlers as _TestServiceHandlers, TestServiceClient } from '../proto/test/TestService';
-import { ProtoGrpcType } from '../proto/test';
-import { EchoHelloRequest__Output } from '../proto/test/EchoHelloRequest';
-import { EchoHelloResponse__Output } from '../proto/test/EchoHelloResponse';
-import { EchoByeRequest__Output } from '../proto/test/EchoByeRequest';
-import { EchoByeResponse__Output } from '../proto/test/EchoByeResponse';
+import { TestServiceHandlers as _TestServiceHandlers, TestServiceClient } from './protoTypes/test/TestService';
+import { ProtoGrpcType } from './protoTypes/test';
+import { EchoHelloRequest } from './protoTypes/test/EchoHelloRequest';
+import { EchoHelloResponse } from './protoTypes/test/EchoHelloResponse';
+import { EchoByeRequest } from './protoTypes/test/EchoByeRequest';
+import { EchoByeResponse } from './protoTypes/test/EchoByeResponse';
 
-const packageDefinition = protoLoader.loadSync('../proto/test.proto');
+const packageDefinition = protoLoader.loadSync(__dirname + '/../protos/test.proto');
 const testProto = grpc.loadPackageDefinition(packageDefinition) as unknown as ProtoGrpcType;
 
 interface TestServiceHandlers {
-    echoHello: (req: EchoHelloRequest__Output) => Promise<EchoHelloResponse__Output>;
-    echoBye: (req: EchoByeRequest__Output) => Promise<EchoByeResponse__Output>;
+    echoHello: (req: EchoHelloRequest) => Promise<EchoHelloResponse>;
+    echoBye: (req: EchoByeRequest) => Promise<EchoByeResponse>;
 }
 
 const genHandler = async <Q, S>(call: grpc.ServerUnaryCall<Q, S>,
@@ -53,28 +53,28 @@ class TestClient {
         this.client = new testProto.test.TestService(serverUrl, grpc.credentials.createInsecure());
     }
 
-    public echoHello = async (req: EchoHelloRequest__Output): Promise<EchoHelloResponse__Output> => {
+    public echoHello = async (req: EchoHelloRequest): Promise<EchoHelloResponse> => {
         return new Promise((resolve) => {
             this.client.echoHello(req, (_, res) => {
-                resolve(res as EchoHelloResponse__Output);
+                resolve(res as EchoHelloResponse);
             });
         });
     };
 
-    public echoBye = async (req: EchoByeRequest__Output): Promise<EchoByeResponse__Output> => {
+    public echoBye = async (req: EchoByeRequest): Promise<EchoByeResponse> => {
         return new Promise((resolve) => {
             this.client.echoBye(req, (_, res) => {
-                resolve(res as EchoByeResponse__Output);
+                resolve(res as EchoByeResponse);
             });
         });
     };
 }
 
 export {
-    EchoHelloRequest__Output as EchoHelloRequest,
-    EchoHelloResponse__Output as EchoHelloResponse,
-    EchoByeRequest__Output as EchoByeRequest,
-    EchoByeResponse__Output as EchoByeResponse,
+    EchoHelloRequest,
+    EchoHelloResponse,
+    EchoByeRequest,
+    EchoByeResponse,
     TestServiceHandlers,
     TestService,
     TestClient

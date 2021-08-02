@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "genProto": "./node_modules/@grpc/proto-loader/build/bin/proto-loader-gen-types.js --longs=String --enums=String --defaults --oneofs --grpcLib=@grpc/grpc-js --outDir=proto/ proto/*.proto"
+    "build:proto": "rm -rf ./src/protoTypes && ./node_modules/@grpc/proto-loader/build/bin/proto-loader-gen-types.js --longs=String --enums=String --defaults --oneofs --grpcLib=@grpc/grpc-js --outDir=src/protoTypes protos/*.proto",
+    "build:es6": "rm -rf ./dist && tsc --downlevelIteration --skipLibCheck --module commonjs --target es6 --outDir dist",
+    "build": "npm run build:proto && npm run build:es6"
   },
   "author": "",
   "license": "ISC",

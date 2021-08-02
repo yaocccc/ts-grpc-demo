@@ -1,8 +1,8 @@
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
-import { ProtoGrpcType as TestProtoGrpcType } from '../proto/test';
+import { ProtoGrpcType as TestProtoGrpcType } from './protoTypes/test';
 
-const packageDefinition = protoLoader.loadSync('../proto/test.proto');
+const packageDefinition = protoLoader.loadSync(__dirname + '/../protos/test.proto');
 const testProto = grpc.loadPackageDefinition(packageDefinition) as unknown as TestProtoGrpcType;
 
 const client = new testProto.test.TestService('0.0.0.0:6666', grpc.credentials.createInsecure());
